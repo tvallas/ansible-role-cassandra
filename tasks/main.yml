@@ -1,0 +1,59 @@
+---
+# tasks file for cassandra
+
+- name: Install prerequirements
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ casssanrda_prerequirements }}"
+
+- name: Create cassandra group
+  group:
+    name: "{{ cassandra_group }}"
+    gid: "{{ cassandra_group_id}}"
+    system: yes
+
+- name: Create cassandra group
+  user:
+    name: "{{ cassandra_user }}"
+    comment: "Cassandra service user"
+    uid: "{{ cassandra_user_id }}"
+    group: "{{ cassandra_group }}"
+    system: yes
+
+- name: Add Apache Cassandra repository
+  yum_repository:
+    name: cassandra
+    description: Apache cassandra repository
+    baseurl: https://www.apache.org/dist/cassandra/redhat/311x/
+    gpgkey: https://www.apache.org/dist/cassandra/KEYS
+    gpgcheck: yes
+
+- name: Install Cassandra package
+  yum:
+    name:  "{{ item }}"
+    state: present
+  with_items:
+    - cassandra
+
+- name: Copy cassandra-env.sh
+  template:
+    src: cassandra-env.sh.j2
+    dest: /etc/cassandra/default.conf/cassandra-env.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy cassandra.yaml
+  template:
+    src: cassandra.yaml.j2
+    dest: /etc/cassandra/default.conf/cassandra.yaml
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Start and enable cassandra service
+  systemd:
+    name: cassandra
+    state: started
+    enabled: yes
