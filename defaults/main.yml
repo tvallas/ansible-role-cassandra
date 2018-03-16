@@ -16,3 +16,4 @@ cassandra_seeds: 127.0.0.1
 cassandra_rpc_address: 0.0.0.0
 cassandra_listen_address: localhost
 cassandra_broadcast_rpc_address: "{{ ansible_default_ipv4.address }}"
+cassandra_endpoint_snitch: SimpleSnitch
