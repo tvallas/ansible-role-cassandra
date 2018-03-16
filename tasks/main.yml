@@ -43,6 +43,7 @@
     owner: root
     group: root
     mode: 0755
+  notify: restart cassandra
 
 - name: Copy cassandra.yaml
   template:
@@ -51,9 +52,35 @@
     owner: root
     group: root
     mode: 0755
+  notify: restart cassandra
+
+- name: Copy cassandra-rackdc.properties
+  template:
+    src: cassandra-rackdc.properties.j2
+    dest: /etc/cassandra/default.conf/cassandra-rackdc.properties
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart cassandra
 
 - name: Start and enable cassandra service
   systemd:
     name: cassandra
     state: started
     enabled: yes
+
+- name: Verify that node status is up
+  shell: "nodetool status | grep {{ ansible_default_ipv4.address }} | cut -d ' ' -f 1"
+  register: node_status
+  retries: 10
+  delay: 10
+  until: node_status.stdout == "UN"
+  check_mode: no
+  changed_when: false
+
+- name: Verify that node port is responding
+  wait_for:
+    host: 127.0.0.1
+    state: started
+    timeout: 300
+    port: 9042

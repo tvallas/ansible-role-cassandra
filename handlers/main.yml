@@ -1,2 +1,7 @@
 ---
 # handlers file for cassandra
+
+- name: restart cassandra
+  systemd:
+    name: cassandra.service
+    state: restarted
