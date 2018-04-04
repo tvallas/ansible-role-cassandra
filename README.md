@@ -1,38 +1,95 @@
-Role Name
+Ansible role casssandra
 =========
 
-A brief description of the role goes here.
+Installs Apache Cassandra database
 
 Requirements
 ------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Traffic on following ports needs to be allowed between cluster hosts:
+7000/tcp # Cassandra inter node
+9042/tcp # Cassandra client rpc_port
+7199/tcp # Cassanrda JMX
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+#### `cassandra_repo_baseurl` (optional)
+
+Apache Cassandra repository url.
+
+#### `cassandra_repo_gpgkey` (optional)
+
+Apache Cassanra repo gpgkey
+
+#### `casssanrda_prerequirements` (optional)
+
+Pre-requirement packages
+
+#### `cassandra_user` (optional)
+
+Apache Cassandra service user
+
+#### `cassandra_user_id` (optional)
+
+Apache Cassandra service user's id
+
+#### `cassandra_group` (optional)
+Apache Cassandra service user's group
+
+#### `cassandra_group_id` (optional)
+Apache Cassandra service user's group id
+
+#### `cassandra_cluster_name` (required)
+
+Name of the Apache Cassandra cluster.
+
+#### `cassandra_seeds` (required)
+
+Apache Cassandra seeds
+
+#### `cassandra_rpc_address` (optional)
+
+Apache Cassandra RPC address (default 0.0.0.0)
+
+#### `cassandra_listen_address` (optional)
+
+Address to listen
+
+#### `cassandra_broadcast_rpc_address`(optional)
+
+Apache Cassandra broadcast RPC address
+
+#### `cassandra_endpoint_snitch` (optional)
+
+ Endpoint snitch (default SimpleSnitch)
+
+#### `cassandra_dc` (required)
+
+Name of the datacenter
+
+#### `cassandra_rack` (required)
+
+Name of the rack
+
 
 Dependencies
 ------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: cassandra, tags: cassandra }
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Tuomas Vallaskangas
+tvallas@iki.fi

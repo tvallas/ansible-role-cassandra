@@ -25,8 +25,8 @@
   yum_repository:
     name: cassandra
     description: Apache cassandra repository
-    baseurl: https://www.apache.org/dist/cassandra/redhat/311x/
-    gpgkey: https://www.apache.org/dist/cassandra/KEYS
+    baseurl: "{{ cassandra_repo_baseurl }}"
+    gpgkey: "{{ cassandra_repo_gpgkey }}"
     gpgcheck: yes
 
 - name: Install Cassandra package

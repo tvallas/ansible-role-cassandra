@@ -1,6 +1,9 @@
 ---
 # defaults file for cassandra
 
+cassandra_repo_baseurl: "https://www.apache.org/dist/cassandra/redhat/311x/"
+cassandra_repo_gpgkey: "https://www.apache.org/dist/cassandra/KEYS"
+
 casssanrda_prerequirements:
     - java-1.8.0-openjdk-1.8.0.151-5.b12.el7_4
     - java-1.8.0-openjdk-headless-1.8.0.151-5.b12.el7_4
