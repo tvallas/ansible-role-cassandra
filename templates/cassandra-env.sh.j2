@@ -229,6 +229,12 @@ fi
 # To enable remote JMX connections, uncomment lines below
 # with authentication and/or ssl enabled. See https://wiki.apache.org/cassandra/JmxSecurity
 #
+
+# Specifies the default port over which Cassandra will be available for
+# JMX connections.
+# For security reasons, you should not expose this port to the internet.  Firewall it if needed.
+JMX_PORT="7199"
+
 LOCAL_JMX=no
 
 if [ "$LOCAL_JMX" = "yes" ]; then
